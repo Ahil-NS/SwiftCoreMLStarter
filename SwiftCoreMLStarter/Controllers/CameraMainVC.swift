@@ -8,16 +8,18 @@
 
 import UIKit
 import AVFoundation
+import CoreML
+import Vision
 
 class CameraMainVC: UIViewController {
-
     
     var captureSession: AVCaptureSession!
     var cameraOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
     
-    var photoData: Data?
+    @IBOutlet weak var identificationLabel: UILabel!
     
+    var photoData: Data?
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var flashButton: UIButton!
@@ -76,14 +78,34 @@ class CameraMainVC: UIViewController {
     @objc func didTapCameraView() {
        
         let settings = AVCapturePhotoSettings()
-        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
         
+//        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+//        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
+        
+        let previewFormat = settings.embeddedThumbnailPhotoFormat
         settings.previewPhotoFormat = previewFormat
     
         cameraOutput.capturePhoto(with: settings, delegate: self)
     }
     
+    func resultsMethod(request: VNRequest, error: Error?) {
+        guard let results = request.results as? [VNClassificationObservation] else { return }
+        
+        for classification in results {
+            if classification.confidence < 0.5 {
+                let unknownObjectMessage = "I'm not sure what this is. Please try again."
+                self.identificationLabel.text = unknownObjectMessage
+                self.confidenceLabel.text = ""
+                break
+            } else {
+                let identification = classification.identifier
+                let confidence = Int(classification.confidence * 100)
+                self.identificationLabel.text = identification
+                self.confidenceLabel.text = "CONFIDENCE: \(confidence)%"
+                break
+            }
+        }
+    }
 }
 
 extension CameraMainVC: AVCapturePhotoCaptureDelegate {
@@ -92,6 +114,15 @@ extension CameraMainVC: AVCapturePhotoCaptureDelegate {
             debugPrint(error)
         } else {
             photoData = photo.fileDataRepresentation()
+            
+            do {
+                let model = try VNCoreMLModel(for: SqueezeNet().model)
+                let request = VNCoreMLRequest(model: model, completionHandler: resultsMethod)
+                let handler = VNImageRequestHandler(data: photoData!)
+                try handler.perform([request])
+            } catch {
+                debugPrint(error)
+            }
             let image = UIImage(data: photoData!)
             self.captureImageView.image = image
         }

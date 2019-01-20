@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA70280D21F4CF230077ED81 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FA70280C21F4CF230077ED81 /* SqueezeNet.mlmodel */; };
 		FABFE70121F33E000068F8B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE70021F33E000068F8B4 /* AppDelegate.swift */; };
 		FABFE70321F33E000068F8B4 /* CameraMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABFE70221F33E000068F8B4 /* CameraMainVC.swift */; };
 		FABFE70621F33E000068F8B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FABFE70421F33E000068F8B4 /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA70280C21F4CF230077ED81 /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 		FABFE6FD21F33E000068F8B4 /* SwiftCoreMLStarter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCoreMLStarter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABFE70021F33E000068F8B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FABFE70221F33E000068F8B4 /* CameraMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraMainVC.swift; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA70280E21F4D0140077ED81 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA70280C21F4CF230077ED81 /* SqueezeNet.mlmodel */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		FABFE6F421F33E000068F8B4 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +70,7 @@
 		FABFE6FF21F33E000068F8B4 /* SwiftCoreMLStarter */ = {
 			isa = PBXGroup;
 			children = (
+				FA70280E21F4D0140077ED81 /* Resources */,
 				FABFE71321F3743B0068F8B4 /* Controllers */,
 				FABFE71221F374310068F8B4 /* View */,
 				FABFE70021F33E000068F8B4 /* AppDelegate.swift */,
@@ -161,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FABFE70321F33E000068F8B4 /* CameraMainVC.swift in Sources */,
+				FA70280D21F4CF230077ED81 /* SqueezeNet.mlmodel in Sources */,
 				FABFE71921F379CE0068F8B4 /* RoundedImageView.swift in Sources */,
 				FABFE70121F33E000068F8B4 /* AppDelegate.swift in Sources */,
 				FABFE71521F375570068F8B4 /* RoundedShadowView.swift in Sources */,
